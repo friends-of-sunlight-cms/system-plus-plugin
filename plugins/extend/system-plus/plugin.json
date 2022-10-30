@@ -1,0 +1,22 @@
+{
+    "$schema": "../../../system/schema/extend.json",
+    "name": "System Plus",
+    "description": "Improves the user interface and adds new options for extend plugins.",
+    "version": "0.9.0",
+    "environment": {
+        "system": "^8.0"
+    },
+    "url": "https://github.com/friends-of-sunlight-cms/",
+    "class": "SystemPlusPlugin",
+    "langs": {
+        "systemplus": "lang"
+    },
+    "events": [
+        {"event": "admin.page.editscript", "method": "onPageEditScript", "priority": 99999}
+    ],
+    "events.web": [],
+    "events.admin": [
+        {"event": "admin.head", "method": "onHead"},
+        {"event": "admin.style", "method": "onTweakerStyle"}
+    ]
+}
