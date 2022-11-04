@@ -18,6 +18,6 @@
     "events.web": [],
     "events.admin": [
         {"event": "admin.head", "method": "onHead"},
-        {"event": "admin.style", "method": "onTweakerStyle"}
+        {"event": "admin.style", "method": "onAdminStyle"}
     ]
 }

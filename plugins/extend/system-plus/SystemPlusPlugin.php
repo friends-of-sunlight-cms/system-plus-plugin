@@ -2,12 +2,9 @@
 
 namespace SunlightExtend\SystemPlus;
 
-use Sunlight\Admin\Admin;
 use Sunlight\Admin\AdminState;
 use Sunlight\Extend;
 use Sunlight\Plugin\ExtendPlugin;
-use Sunlight\Plugin\PluginData;
-use Sunlight\Plugin\PluginManager;
 use Sunlight\Router;
 use Sunlight\User;
 use Sunlight\Util\Request;
@@ -93,7 +90,7 @@ class SystemPlusPlugin extends ExtendPlugin
     /**
      * Register custom CSS to dynamic system style
      */
-    public function onTweakerStyle($args)
+    public function onAdminStyle($args)
     {
         $args['output'] .= "\n/* System Plus Plugin */\n";
         // editscript buttonbox
