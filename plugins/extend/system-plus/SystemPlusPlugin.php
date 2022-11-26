@@ -17,7 +17,7 @@ class SystemPlusPlugin extends ExtendPlugin
         global $_admin;
 
         // register only for plugins module
-        if ($_admin->currentModule === 'plugins') {
+        if (isset($_admin) && $_admin->currentModule === 'plugins') {
             $args['js'][] = $this->getWebPath() . '/resources/js/plugins-filter.js';
         }
     }
