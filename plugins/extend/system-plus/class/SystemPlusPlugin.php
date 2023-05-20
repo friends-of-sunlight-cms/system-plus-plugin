@@ -18,7 +18,7 @@ class SystemPlusPlugin extends ExtendPlugin
 
         // register only for plugins module
         if (isset($_admin) && $_admin->currentModule === 'plugins') {
-            $args['js'][] = $this->getWebPath() . '/resources/js/plugins-filter.js';
+            $args['js'][] = $this->getWebPath() . '/public/js/plugins-filter.js';
         }
     }
 
@@ -80,7 +80,7 @@ class SystemPlusPlugin extends ExtendPlugin
 
     private function getBoxButton(string $link, string $iconName, string $label): string
     {
-        $icon = $this->getWebPath() . '/resources/icons/' . $iconName . '.png';
+        $icon = $this->getWebPath() . '/public/icons/' . $iconName . '.png';
         return '<a class="button block bigger" href="' . _e($link) . '">'
             . '<img src="' . _e($icon) . '" alt="' . $iconName . '" class="icon">'
             . $label
