@@ -63,7 +63,7 @@ class SystemPlusPlugin extends ExtendPlugin
         }
 
         // event
-        $editscript_setting_extra .= Extend::buffer('plugin.system-plus.buttonbox.before', [
+        $editscript_setting_extra .= Extend::buffer('system-plus.buttonbox.before', [
             'admin' => $_admin,
             'new' => $new,
             'buttons' => &$buttons,
@@ -73,7 +73,7 @@ class SystemPlusPlugin extends ExtendPlugin
             $editscript_setting_extra .= '<div class="systemplus-buttonbox">' . implode('', $buttons) . '</div>';
         }
         //event
-        $editscript_setting_extra .= Extend::buffer('plugin.system-plus.buttonbox.after', [
+        $editscript_setting_extra .= Extend::buffer('system-plus.buttonbox.after', [
             'admin' => $_admin,
         ]);
     }
