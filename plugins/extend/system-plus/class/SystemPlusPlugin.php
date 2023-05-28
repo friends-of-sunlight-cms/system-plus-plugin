@@ -11,15 +11,17 @@ use Sunlight\Util\Request;
 
 class SystemPlusPlugin extends ExtendPlugin
 {
+
+    public function onModInit(array $args): void
+    {
+        if ($args['name'] === 'plugins') {
+            $this->enableEventGroup('system-plus');
+        }
+    }
+
     public function onHead(array $args): void
     {
-        /** @var $_admin AdminState */
-        global $_admin;
-
-        // register only for plugins module
-        if (isset($_admin) && $_admin->currentModule === 'plugins') {
-            $args['js'][] = $this->getWebPath() . '/public/js/plugins-filter.js';
-        }
+        $args['js'][] = $this->getAssetPath('public/js/plugins-filter.js');
     }
 
     /**
@@ -63,7 +65,7 @@ class SystemPlusPlugin extends ExtendPlugin
         }
 
         // event
-        $editscript_setting_extra .= Extend::buffer('system-plus.buttonbox.before', [
+        $editscript_setting_extra .= Extend::buffer('plugin.system-plus.buttonbox.before', [
             'admin' => $_admin,
             'new' => $new,
             'buttons' => &$buttons,
@@ -73,7 +75,7 @@ class SystemPlusPlugin extends ExtendPlugin
             $editscript_setting_extra .= '<div class="systemplus-buttonbox">' . implode('', $buttons) . '</div>';
         }
         //event
-        $editscript_setting_extra .= Extend::buffer('system-plus.buttonbox.after', [
+        $editscript_setting_extra .= Extend::buffer('plugin.system-plus.buttonbox.after', [
             'admin' => $_admin,
         ]);
     }

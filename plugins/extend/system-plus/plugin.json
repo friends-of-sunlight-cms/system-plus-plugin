@@ -18,7 +18,8 @@
     ],
     "events.web": [],
     "events.admin": [
-        {"event": "admin.head", "method": "onHead"},
+        {"event": "admin.mod.init", "method": "onModInit"},
+        {"event": "admin.head", "method": "onHead", "group": "system-plus"},
         {"event": "admin.style", "method": "onAdminStyle"}
     ]
 }
