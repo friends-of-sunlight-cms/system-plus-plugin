@@ -4,6 +4,7 @@ namespace SunlightExtend\SystemPlus;
 
 use Sunlight\Admin\AdminState;
 use Sunlight\Extend;
+use Sunlight\Plugin\Action\PluginAction;
 use Sunlight\Plugin\ExtendPlugin;
 use Sunlight\Router;
 use Sunlight\User;
@@ -30,21 +31,41 @@ class SystemPlusPlugin extends ExtendPlugin
     public function onPageEditScript(array $args): void
     {
         /**  @var $_admin AdminState */
-        global $_admin, $new, $editscript_setting_extra;
+        global $_admin, $new, $editscript_setting_extra, $query;
 
         $buttons = [];
+
+        $config = $this->getConfig();
+
+        if ($config['service_buttons']) {
+            // add save and preview buttons
+            $buttons['content_service'] = '<div id="service-container"><button type="submit" class="button savebtn block bigger" accesskey="s">
+            <img src="' . _e($this->getAssetPath('public/icons/save.png')) . '" alt="save" class="icon">'
+                . ($new ? _lang('global.create') : _lang('global.savechanges'))
+                . '</button>'
+
+                . (!$new ? $this->getBoxButton(
+                    Router::page($query['id'], $query['slug']),
+                    'magnifier',
+                    _lang('systemplus.btn.preview'),
+                    ['css_class' => ['button', 'prevbtn', 'bigger']]
+                ) : '')
+                . '</div>';
+        }
 
         // add buttons to category script
         if ($_admin->currentModule === 'content-editcategory' && !$new) {
             $buttons['article_create'] = $this->getBoxButton(
                 Router::admin('content-articles-edit', ['query' => ['new_cat' => Request::get('id')]]),
                 'edit',
-                _lang('admin.content.articles.create')
+                _lang('admin.content.articles.create'),
+                ['css_class' => ['button', 'block', 'bigger']]
             );
             $buttons['article_list'] = $this->getBoxButton(
                 Router::admin('content-articles-list', ['query' => ['cat' => Request::get('id')]]),
                 'list',
-                _lang('admin.content.articles.list.title')
+                _lang('admin.content.articles.list.title'),
+                ['css_class' => ['button', 'block', 'bigger']]
             );
         }
 
@@ -53,19 +74,21 @@ class SystemPlusPlugin extends ExtendPlugin
             $buttons['image_manage'] = $this->getBoxButton(
                 Router::admin('content-manageimgs', ['query' => ['g' => Request::get('id')]]),
                 'images',
-                _lang('admin.content.form.manageimgs')
+                _lang('admin.content.form.manageimgs'),
+                ['css_class' => ['button', 'block', 'bigger']]
             );
             if (User::hasPrivilege('adminsettings')) {
                 $buttons['image_settings'] = $this->getBoxButton(
                     Router::admin('settings', ['fragment' => 'settings_galleries']),
                     'settings',
-                    _lang('systemplus.btn.gallery.settings')
+                    _lang('systemplus.btn.gallery.settings'),
+                    ['css_class' => ['button', 'block', 'bigger']]
                 );
             }
         }
 
         // event
-        $editscript_setting_extra .= Extend::buffer('plugin.system-plus.buttonbox.before', [
+        $editscript_setting_extra .= Extend::buffer('system-plus.buttonbox.before', [
             'admin' => $_admin,
             'new' => $new,
             'buttons' => &$buttons,
@@ -75,15 +98,20 @@ class SystemPlusPlugin extends ExtendPlugin
             $editscript_setting_extra .= '<div class="systemplus-buttonbox">' . implode('', $buttons) . '</div>';
         }
         //event
-        $editscript_setting_extra .= Extend::buffer('plugin.system-plus.buttonbox.after', [
+        $editscript_setting_extra .= Extend::buffer('system-plus.buttonbox.after', [
             'admin' => $_admin,
         ]);
     }
 
-    private function getBoxButton(string $link, string $iconName, string $label): string
+    private function getBoxButton(string $link, string $iconName, string $label, array $options = []): string
     {
-        $icon = $this->getWebPath() . '/public/icons/' . $iconName . '.png';
-        return '<a class="button block bigger" href="' . _e($link) . '">'
+        $options += [
+            'css_class' => [],
+            'target' => '_blank',
+        ];
+
+        $icon = $this->getAssetPath('public/icons/' . $iconName . '.png');
+        return '<a class="' . implode(' ', $options['css_class']) . '" href="' . _e($link) . '" target="' . $options['target'] . '">'
             . '<img src="' . _e($icon) . '" alt="' . $iconName . '" class="icon">'
             . $label
             . '</a>';
@@ -95,12 +123,42 @@ class SystemPlusPlugin extends ExtendPlugin
     public function onAdminStyle($args)
     {
         $args['output'] .= "\n/* System Plus Plugin */\n";
+
         // editscript buttonbox
         $args['output'] .= ".module-content-editgallery>form>p>a.button {display: none;}\n";
         $args['output'] .= "button.block.bigger {margin: 6px;}\n";
+        $args['output'] .= "button.savebtn.block.bigger {text-align: left; float: left;}\n";
+        $args['output'] .= "a.prevbtn.bigger {margin: 6px; float: right;}\n";
         $args['output'] .= "button.block img.icon {float: none; margin: 0; padding: 0 10px 0 0;}\n";
+
+        // service buttons (save and preview)
+        $args['output'] .= "#service-container {display: flex; justify-content: space-around; width: 100%; border-bottom: 1px solid " . $GLOBALS['scheme_smoke'] . ";}";
+        $args['output'] .= "#service-container .button {flex-grow: 1;}";
+
         // settings highlight
         $args['output'] .= "fieldset:target {border: 1px solid " . $GLOBALS['scheme_bar'] . ";}";
         $args['output'] .= "\n/* /System Plus Plugin */\n";
     }
+
+    /**
+     * ============================================================================
+     *  EXTEND CONFIGURATION
+     * ============================================================================
+     */
+
+    protected function getConfigDefaults(): array
+    {
+        return [
+            'service_buttons' => true,
+        ];
+    }
+
+    public function getAction(string $name): ?PluginAction
+    {
+        if ($name === 'config') {
+            return new ConfigAction($this);
+        }
+        return parent::getAction($name);
+    }
+
 }

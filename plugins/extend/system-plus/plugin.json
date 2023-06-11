@@ -13,11 +13,10 @@
     "langs": {
         "systemplus": "lang"
     },
-    "events": [
-        {"event": "admin.page.editscript", "method": "onPageEditScript", "priority": 99999}
-    ],
+    "events": [],
     "events.web": [],
     "events.admin": [
+        {"event": "admin.page.editscript", "method": "onPageEditScript", "priority": 99999},
         {"event": "admin.mod.init", "method": "onModInit"},
         {"event": "admin.head", "method": "onHead", "group": "system-plus"},
         {"event": "admin.style", "method": "onAdminStyle"}
