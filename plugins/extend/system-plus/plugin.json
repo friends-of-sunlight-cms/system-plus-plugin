@@ -2,7 +2,7 @@
     "$schema": "../../../system/schema/extend.json",
     "name": "System Plus",
     "description": "Improves the user interface and adds new options for extend plugins.",
-    "version": "0.9.1",
+    "version": "0.9.2",
     "environment": {
         "system": "^8.0"
     },
@@ -10,6 +10,12 @@
         {"name": "Friends of Sunlight CMS", "url": "https://github.com/friends-of-sunlight-cms/"}
     ],
     "class": "SystemPlusPlugin",
+    "config_defaults": {
+        "service_buttons": true
+    },
+    "actions": {
+        "config": "ConfigAction"
+    },
     "langs": {
         "systemplus": "lang"
     },

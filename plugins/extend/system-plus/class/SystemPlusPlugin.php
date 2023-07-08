@@ -139,26 +139,4 @@ class SystemPlusPlugin extends ExtendPlugin
         $args['output'] .= "fieldset:target {border: 1px solid " . $GLOBALS['scheme_bar'] . ";}";
         $args['output'] .= "\n/* /System Plus Plugin */\n";
     }
-
-    /**
-     * ============================================================================
-     *  EXTEND CONFIGURATION
-     * ============================================================================
-     */
-
-    protected function getConfigDefaults(): array
-    {
-        return [
-            'service_buttons' => true,
-        ];
-    }
-
-    public function getAction(string $name): ?PluginAction
-    {
-        if ($name === 'config') {
-            return new ConfigAction($this);
-        }
-        return parent::getAction($name);
-    }
-
 }
