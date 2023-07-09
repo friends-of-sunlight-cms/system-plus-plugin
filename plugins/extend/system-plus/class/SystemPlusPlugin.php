@@ -4,7 +4,6 @@ namespace SunlightExtend\SystemPlus;
 
 use Sunlight\Admin\AdminState;
 use Sunlight\Extend;
-use Sunlight\Plugin\Action\PluginAction;
 use Sunlight\Plugin\ExtendPlugin;
 use Sunlight\Router;
 use Sunlight\User;
