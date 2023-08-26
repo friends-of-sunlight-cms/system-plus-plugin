@@ -2,18 +2,12 @@
 
 namespace SunlightExtend\SystemPlus;
 
-use Fosc\Feature\Plugin\Config\FieldGenerator;
 use Sunlight\Plugin\Action\ConfigAction as BaseConfigAction;
 
 class ConfigAction extends BaseConfigAction
 {
-    protected function getFields(): array
+    public function getConfigLabel(string $key): string
     {
-        $langPrefix = '%p:systemplus.config';
-
-        $gen = new FieldGenerator($this->plugin);
-        $gen->generateField('service_buttons', $langPrefix, '%checkbox');
-
-        return $gen->getFields();
+        return _lang('systemplus.config.' . $key);
     }
 }
