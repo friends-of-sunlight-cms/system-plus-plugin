@@ -14,6 +14,9 @@ return function (array $args) {
     $args['output'] .= "#service-container {display: flex; justify-content: space-around; width: 100%; border-bottom: 1px solid " . $GLOBALS['scheme_smoke'] . ";}";
     $args['output'] .= "#service-container .button {flex-grow: 1; text-wrap: nowrap;}";
 
+    // plugin filter
+    $args['output'] .= "input#plugin-filter {margin: 0 3px 0 0;}";
+
     // settings highlight
     $args['output'] .= "fieldset:target {border: 1px solid " . $GLOBALS['scheme_bar'] . ";}";
     $args['output'] .= "\n/* /System Plus Plugin */\n";
