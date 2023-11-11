@@ -5,7 +5,7 @@
     "authors": [
         {"name": "Friends of Sunlight CMS", "url": "https://github.com/friends-of-sunlight-cms/"}
     ],
-    "version": "1.0.0",
+    "version": "1.1.0",
     "environment": {
         "system": "^8.0"
     },
@@ -18,12 +18,15 @@
     "langs": {
         "systemplus": "lang"
     },
-    "events": [],
+    "events": [
+        {"event": "core.javascript", "script": "event/admin/core_javascript.php", "group": "system-plus-802"}
+    ],
     "events.web": [],
     "events.admin": [
         {"event": "admin.page.editscript", "script": "event/admin/page_editscript.php", "priority": 99999},
         {"event": "admin.mod.init", "script": "event/admin/mod_init.php"},
         {"event": "admin.head", "script": "event/admin/head_assets.php", "group": "system-plus"},
+        {"event": "admin.head", "script": "event/admin/head_assets_802.php", "group": "system-plus-802"},
         {"event": "admin.style", "script": "event/admin/admin_style.php"}
     ]
 }
