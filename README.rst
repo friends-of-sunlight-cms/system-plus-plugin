@@ -3,6 +3,8 @@ System Plus
 
 Improves the user interface and adds new options for extend plugins
 
+   This plugin has been replaced by `Admin Plus <https://github.com/friends-of-sunlight-cms/admin-plus-plugin>`_  plugin for SunLight CMS 8.1 or newer
+
 .. contents::
    :depth: 2
 
